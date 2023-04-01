@@ -1,7 +1,7 @@
-from dtms_client.DMTSClient import DTMSClient
+from dtms_client.DTMSClient import DTMSClient
 class TestClass:
     def setup_class(self):
-        self.client = DTMSClient("http://localhost:8000")
+        self.client = DTMSClient("https://dtms.shahriyarshawon.xyz")
     def test_get_class(self):
         c = self.client.get_class("cs 383")
         assert c.number == "CS 383"
@@ -19,6 +19,6 @@ class TestClass:
         assert "ECE 211" in postreqs
     
     def test_get_classes_for_term_raw(self):
-        all_classes_for_term = self.client.get_classes_for_term(term="202245", subject="CS")
+        all_classes_for_term = self.client.get_classes_for_term(term="202245", subject="MATH")
         assert len(all_classes_for_term) > 0
     
