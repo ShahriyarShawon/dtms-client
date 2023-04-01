@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "dtms-client"
 version = "0.1.0"
-description = ""
+description = "Client library for DTMS api"
 authors = ["Shahriyar Shawon <ShahriyarShawon321@gmail.com>"]
 readme = "README.md"
 packages = [{include = "dtms_client"}]
