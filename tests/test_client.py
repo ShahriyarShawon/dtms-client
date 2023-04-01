@@ -5,6 +5,10 @@ class TestClass:
     def test_get_class(self):
         c = self.client.get_class("cs 383")
         assert c.number == "CS 383"
+
+    def test_get_class_does_not_exist(self):
+        c = self.client.get_class("cs 11111")
+        assert c.number == "CS 383"
     
     def test_get_prereqs_for_class(self):
         paths = self.client.get_prereqs_for_class("CS 383")
