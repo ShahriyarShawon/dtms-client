@@ -41,10 +41,12 @@ class DTMSClient:
         url = self.base / "class" / course_number
         response = self.session.get(url)
         content = json.loads(response.content)
+        if "status_code" in content:
+            return None 
         return structure(content, DrexelClass)
 
     def get_prereqs_for_class(self, course_number: str) -> list[str]:
-        url = self.base / "prereqs_for" / course_number
+        url = self.base / "prereqs" / course_number
         response = self.session.get(url)
         content = json.loads(response.content)
         return content
@@ -52,16 +54,17 @@ class DTMSClient:
     def get_postreqs_for_class(
         self, course_number: str, subject_filter: Optional[str] = None
     ) -> list[DrexelClass]:
-        url = self.base / "postreq" / course_number
+        url = self.base / "postreqs" / course_number
         if subject_filter:
             url = url.with_query({"subject_filter": subject_filter})
         response = self.session.get(url)
         content = json.loads(response.content)
-        return content
+        return structure(content, list[DrexelClass])
 
     def get_classes_for_term(
         self,
         term: str,
+        course_number: Optional[str] = None,
         college: Optional[str] = None,
         subject: Optional[str] = None,
         credit_hours: Optional[int] = None,
@@ -71,10 +74,12 @@ class DTMSClient:
     ) -> list[DrexelTMSClass]:
         url = self.base / "classes" / "term" / ""
         url = url % {"term": term}
+        if course_number:
+            url = url % {"course_number": course_number.upper()}
         if college:
-            url = url % {"college": college}
+            url = url % {"college": college.upper()}
         if subject:
-            url = url % {"subject": subject}
+            url = url % {"subject": subject.upper()}
         if credit_hours:
             url = url % {"credit_hours": credit_hours}
         if prereq:
