@@ -51,7 +51,7 @@ class DTMSClient:
 
     def get_postreqs_for_class(
         self, course_number: str, subject_filter: Optional[str] = None
-    ) -> list[str]:
+    ) -> list[DrexelClass]:
         url = self.base / "postreq" / course_number
         if subject_filter:
             url = url.with_query({"subject_filter": subject_filter})
